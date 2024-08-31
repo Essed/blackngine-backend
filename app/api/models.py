@@ -12,15 +12,18 @@ class TunedModel(BaseModel):
 class UserCreate(TunedModel):
     email: EmailStr
     password: str
+    name: str
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     password: Optional[str] = None
+    name: Optional[str] = None
 
 class UserBase(BaseModel):
     id: int
     email: EmailStr
     password: str
+    name: str
 
 class CompanyBase(BaseModel):
     id: int

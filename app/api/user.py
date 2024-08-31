@@ -12,7 +12,7 @@ user_router = APIRouter()
 @user_router.post("/")
 async def create_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
     user_dal = UserDAL(db)    
-    existed_user = user_dal.get_by_email(user.email)
+    existed_user = await user_dal.get_by_email(user.email)
     if existed_user: 
         raise HTTPException(status_code=400, detail="User email already registered")
     user = user.model_dump()

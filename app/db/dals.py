@@ -20,20 +20,22 @@ class UserDAL:
         result = await self.db.execute(select(User))
         return result.scalars().all()
 
-    async def create(self, email: str, password: str):
-        new_user = User(email=email, password=password)
+    async def create(self, email: str, password: str, name: str = None):
+        new_user = User(email=email, password=password, name=name)
         self.db.add(new_user)
         await self.db.commit()
         await self.db.refresh(new_user)
         return new_user
 
-    async def update(self, user_id: int, email: str = None, password: str = None):
+    async def update(self, user_id: int, email: str = None, password: str = None, name: str = None):
         user = await self.get(user_id)
         if user:
             if email is not None:
                 user.email = email
             if password is not None:
                 user.password = password
+            if name is not None:
+                user.name = name
             await self.db.commit()
             await self.db.refresh(user)
         return user
